@@ -1,29 +1,29 @@
 grammar GoLang;
 
-/*
-
-package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("Hello, ??")
+@header {
+package pl.project13.jo.antlr;
 }
-*/
 
-file: packageDeclaration? importDeclaration* ;
+@members {
+int WHITESPACE = 1;
+int COMMENTS = 2;
+}
 
-packageDeclaration : PACKAGE Identifier 
+sourceFile: packageDeclaration
+            importDeclaration*
+            funcDeclaration*;
+
+packageDeclaration : PACKAGE Identifier
                    ;
 
 importDeclaration : IMPORT StringLiteral
                   | IMPORT LPAREN (StringLiteral LineTerminator) RPAREN
                   ;
 
-funcDeclaration : FUNC Identifier LPAREN RPAREN LBRACKET statement* RBRACKET
+funcDeclaration : FUNC Identifier LPAREN RPAREN LBRACE statement* RBRACE
                 ;
 
-statement : packagePrefix '.' Identifier LPAREN StringLiteral RPAREN 
+statement : packagePrefix '.' Identifier LPAREN StringLiteral RPAREN NEWLINE?
           ;
 
 packagePrefix : Identifier

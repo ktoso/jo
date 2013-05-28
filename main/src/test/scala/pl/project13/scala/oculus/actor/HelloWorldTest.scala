@@ -8,8 +8,7 @@ class HelloWorldTest extends GoAppSpec {
   behavior of "hello world source"
 
   def App =
-    """
-package main
+    """package main
 
 import "fmt"
 
@@ -24,6 +23,8 @@ func main() {
 
     // when
     app.run()
+
+    // then, should have printed!
   }
 
 }

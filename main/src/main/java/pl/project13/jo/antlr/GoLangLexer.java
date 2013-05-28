@@ -1,19 +1,18 @@
-package pl.project13.jo.antlr;// Generated from GoLang.g4 by ANTLR 4.0
-import org.antlr.v4.runtime.CharStream;
+// Generated from GoLang.g4 by ANTLR 4.0
+
+package pl.project13.jo.antlr;
+
 import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNSimulator;
-import org.antlr.v4.runtime.atn.LexerATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class GoLangLexer extends Lexer {
-
-    public static final int WHITESPACE = 1;
-    public static final int COMMENTS = 2;
-
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -83,6 +82,10 @@ public class GoLangLexer extends Lexer {
 		"FloatingPointLiteral", "CharacterLiteral", "StringLiteral", "Identifier", 
 		"WhiteSpace", "LineTerminator", "SlashComment", "EndOfLineComment"
 	};
+
+
+	int WHITESPACE = 1;
+	int COMMENTS = 2;
 
 
 	public GoLangLexer(CharStream input) {

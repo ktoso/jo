@@ -1,4 +1,7 @@
-package pl.project13.jo.antlr;// Generated from GoLang.g4 by ANTLR 4.0
+// Generated from GoLang.g4 by ANTLR 4.0
+
+package pl.project13.jo.antlr;
+
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
@@ -15,8 +18,8 @@ public class GoLangBaseListener implements GoLangListener {
 	@Override public void enterPackageDeclaration(GoLangParser.PackageDeclarationContext ctx) { }
 	@Override public void exitPackageDeclaration(GoLangParser.PackageDeclarationContext ctx) { }
 
-	@Override public void enterFile(GoLangParser.FileContext ctx) { }
-	@Override public void exitFile(GoLangParser.FileContext ctx) { }
+	@Override public void enterSourceFile(GoLangParser.SourceFileContext ctx) { }
+	@Override public void exitSourceFile(GoLangParser.SourceFileContext ctx) { }
 
 	@Override public void enterPackagePrefix(GoLangParser.PackagePrefixContext ctx) { }
 	@Override public void exitPackagePrefix(GoLangParser.PackagePrefixContext ctx) { }
