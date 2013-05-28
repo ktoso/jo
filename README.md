@@ -1,7 +1,7 @@
 Jo - The JVM based Go implementation
 =====================================
 
-This is a pet project...
+This is a pet project. And it should be spelled as "Joe", that is - similiar to "Go" the original language we're reimplementing here.
 
 <img src="http://golang.org/doc/gopher/gopherbw.png"/>
 
