@@ -19,7 +19,7 @@ class FuncGoLangListener(joc: GoLangClassWriter) extends GoLangBaseListener {
   }
 
   override def enterFuncDeclaration(ctx: FuncDeclarationContext) {
-    println("translate [%s] to [%s]".format(ctx.getText, "println(hello)"))
+    println("translate [%s] to [%s]".format(ctx, "func Main() { println(hello) }"))
 
     joc.defFunc("Main")
   }
@@ -30,17 +30,16 @@ class FuncGoLangListener(joc: GoLangClassWriter) extends GoLangBaseListener {
     joc.exitFunc()
   }
 
-
   override def exitSourceFile(ctx: SourceFileContext) {
     joc.close()
 
     val file = new File("/tmp", "helloworld.class")
     file.delete()
     file.createNewFile()
-    Files.write(joc.getClassBytes, file)
+    Files.write(joc.getByteCode, file)
     println("class stored in: [%s] ".format(file.getAbsolutePath))
   }
 
   /** Get the bytes of the generate `class`. */
-  def getGeneratedClazzDesc: GoClassDesc = new GoClassDesc(generatedClassName, joc.getClassBytes)
+  def getGeneratedClazzDesc: GoClassDesc = new GoClassDesc(generatedClassName, joc.getByteCode)
 }

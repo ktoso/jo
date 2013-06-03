@@ -5,7 +5,7 @@ import org.objectweb.asm.Opcodes._
 
 class GoLangClassWriter extends GeneratedClassSettings {
 
-  val cw = new ClassWriter(0)
+  val cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES)
 
   var mv: MethodVisitor = _
   var fv: FieldVisitor = _
@@ -18,9 +18,21 @@ class GoLangClassWriter extends GeneratedClassSettings {
     cw.visit(SourceLevel, AccPublic, fullName, null, JavaLangObject, Array())
 
     // default constructor
-    mv = cw.visitMethod(AccPublic, "<init>", "()V", null, null)
+    mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+    mv.visitCode()
+    val l0 = new Label()
+    mv.visitLabel(l0)
+    mv.visitLineNumber(4, l0)
     mv.visitVarInsn(ALOAD, 0)
-    mv.visitMethodInsn(INVOKESPECIAL, JavaLangObject, "<init>", "()V")
+    mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V")
+    val l1 = new Label()
+    mv.visitLabel(l1)
+    mv.visitLineNumber(5, l1)
+    mv.visitInsn(RETURN)
+    val l2 = new Label()
+    mv.visitLabel(l2)
+    mv.visitLocalVariable("this", "Lpl/project13/jo/helloworld;", null, l0, l2, 0)
+    mv.visitMaxs(1, 1)
 
     fullName
   }
@@ -34,14 +46,25 @@ class GoLangClassWriter extends GeneratedClassSettings {
   }
 
   def defFunc(access: Int, name: String) {
-//    mv = cw.visitMethod(access, name, "()V", null, null)
-
     // todo remove me, hardcoded hello world
-    mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null)
+    mv = cw.visitMethod(ACC_PUBLIC, "Main", "()V", null, null)
+    mv.visitCode()
+
+    val l0 = new Label()
+    mv.visitLabel(l0)
+    mv.visitLineNumber(8, l0)
     mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
-    mv.visitLdcInsn("hello")
+    mv.visitLdcInsn("Hello World!")
     mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V")
+
+    val l1 = new Label()
+    mv.visitLabel(l1)
+    mv.visitLineNumber(9, l1)
     mv.visitInsn(RETURN)
+
+    val l2 = new Label()
+    mv.visitLabel(l2)
+    mv.visitLocalVariable("this", "Lpl/project13/jo/helloworld;", null, l0, l2, 0)
     mv.visitMaxs(2, 1)
     // todo remove me, hardcoded hello world
 
@@ -55,5 +78,5 @@ class GoLangClassWriter extends GeneratedClassSettings {
     cw.visitEnd()
   }
 
-  def getClassBytes: Array[Byte] = cw.toByteArray
+  def getByteCode: Array[Byte] = cw.toByteArray
 }

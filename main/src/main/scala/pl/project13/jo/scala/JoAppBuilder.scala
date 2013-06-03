@@ -8,9 +8,11 @@ import pl.project13.jo.clazz.SimpleGoClassLoader
 
 class JoAppBuilder {
 
+  private val goClassLoader = new SimpleGoClassLoader
+
   def makeNewListener() = new FuncGoLangListener(new GoLangClassWriter)
 
-  def fromString(source: String): Runnable = {
+  def runnableFrom(source: String): Runnable = {
     val goLangListener = makeNewListener()
 
     val stream = new ANTLRInputStream(source)
@@ -19,18 +21,24 @@ class JoAppBuilder {
     val parser = new GoLangParser(tokens)
     parser.setBuildParseTree(true)
     parser.addParseListener(goLangListener)
+
+    // trigger parsing
     val sourceFile = parser.sourceFile()
 
     val desc = goLangListener.getGeneratedClazzDesc
-    val helloWorldClazz = SimpleGoClassLoader.loadClass(desc.fullName, desc.bytes)
-
+    val helloWorldClazz = goClassLoader.defineClass(desc.fullName, desc.bytes)
 
     new Runnable {
       def run() {
         println("==== Running Go Code! ===")
 
+        println("new instance: ")
         val helloGo = helloWorldClazz.newInstance()
-        val Main = helloWorldClazz.getDeclaredMethod("Main", helloWorldClazz)
+        println("has funcs: ")
+        helloWorldClazz.getDeclaredMethods foreach { f => println("declared: " + f.getName) }
+        println("calling Main: ")
+
+        val Main = helloWorldClazz.getDeclaredMethod("Main")
         Main.invoke(helloGo)
       }
     }
