@@ -21,6 +21,12 @@ public class GoLangBaseListener implements GoLangListener {
 	@Override public void enterSourceFile(GoLangParser.SourceFileContext ctx) { }
 	@Override public void exitSourceFile(GoLangParser.SourceFileContext ctx) { }
 
+	@Override public void enterFuncName(GoLangParser.FuncNameContext ctx) { }
+	@Override public void exitFuncName(GoLangParser.FuncNameContext ctx) { }
+
+	@Override public void enterFuncArguments(GoLangParser.FuncArgumentsContext ctx) { }
+	@Override public void exitFuncArguments(GoLangParser.FuncArgumentsContext ctx) { }
+
 	@Override public void enterPackagePrefix(GoLangParser.PackagePrefixContext ctx) { }
 	@Override public void exitPackagePrefix(GoLangParser.PackagePrefixContext ctx) { }
 

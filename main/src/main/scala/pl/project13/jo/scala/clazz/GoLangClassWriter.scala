@@ -37,24 +37,15 @@ class GoLangClassWriter extends GeneratedClassSettings {
     fullName
   }
 
-
-  def defFunc(name: String) {
-    name.head match {
-      case l if l.isUpper => defFunc(AccPublic, name)
-      case _              => defFunc(AccPrivate, name)
-    }
-  }
-
-  def defFunc(access: Int, name: String) {
-    // todo remove me, hardcoded hello world
-    mv = cw.visitMethod(ACC_PUBLIC, "Main", "()V", null, null)
-    mv.visitCode()
+  /** should be called between `defFunc` and `exitFunc` */
+  def callFunc(pkg: String, name: String, params: Any*) {
+    // todo still only prints things
 
     val l0 = new Label()
     mv.visitLabel(l0)
     mv.visitLineNumber(8, l0)
     mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
-    mv.visitLdcInsn("Hello World!")
+    mv.visitLdcInsn(params.head.toString) // todo change, for now putting only
     mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V")
 
     val l1 = new Label()
@@ -65,12 +56,22 @@ class GoLangClassWriter extends GeneratedClassSettings {
     val l2 = new Label()
     mv.visitLabel(l2)
     mv.visitLocalVariable("this", "Lpl/project13/jo/helloworld;", null, l0, l2, 0)
-    mv.visitMaxs(2, 1)
-    // todo remove me, hardcoded hello world
+  }
 
+  def defFunc(name: String) {
+    name.head match {
+      case l if l.isUpper => defFunc(AccPublic, name)
+      case _              => defFunc(AccPrivate, name)
+    }
+  }
+
+  private def defFunc(access: Int, name: String) {
+    mv = cw.visitMethod(ACC_PUBLIC, name, "()V", null, null)
+    mv.visitCode()
   }
 
   def exitFunc() {
+    mv.visitMaxs(2, 1)
     mv.visitEnd()
   }
 

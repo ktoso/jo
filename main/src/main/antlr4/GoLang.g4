@@ -20,11 +20,19 @@ importDeclaration : IMPORT StringLiteral
                   | IMPORT LPAREN (StringLiteral LineTerminator) RPAREN
                   ;
 
-funcDeclaration : FUNC Identifier LPAREN RPAREN LBRACE statement* RBRACE
+funcDeclaration : FUNC funcName LPAREN RPAREN LBRACE statement* RBRACE
                 ;
 
-statement : packagePrefix '.' Identifier LPAREN StringLiteral RPAREN NEWLINE?
+statement : packagePrefix '.' funcName LPAREN funcArguments RPAREN NEWLINE?
           ;
+
+// only strings for now
+funcArguments : StringLiteral
+              | StringLiteral ',' funcArguments
+              ;
+
+funcName : Identifier
+         ;
 
 packagePrefix : Identifier
               ;

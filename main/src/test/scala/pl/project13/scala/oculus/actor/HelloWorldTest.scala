@@ -7,15 +7,7 @@ class HelloWorldTest extends GoAppSpec {
 
   behavior of "hello world source"
 
-  def App =
-    """package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("Hello, 世界")
-}
-    """.stripMargin
+  def App = io.Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("go/apps/helloworld.go")).getLines().mkString("\n")
 
   it should "should print 'Hello, 世界'" in {
     // given
