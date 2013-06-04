@@ -2,7 +2,7 @@ package pl.project13.jo.scala.listener
 
 import pl.project13.jo.antlr._
 import pl.project13.jo.antlr.GoLangParser._
-import pl.project13.jo.scala.clazz.{GoClassDesc, GoLangClassWriter}
+import pl.project13.jo.scala.clazz._
 import java.io.File
 import com.google.common.io.Files
 
@@ -20,18 +20,24 @@ class FuncGoLangListener(parser: GoLangParser, joc: GoLangClassWriter) extends G
 
   override def enterFuncDeclaration(ctx: FuncDeclarationContext) {
     val funcName = tokens.getText(ctx.funcName)
-    println("method name: [%s]".format(funcName))
+    val jvmReturnType = parseJvmType(ctx.returnType)
 
-    joc.defFunc(funcName)
+    println("func name: [%s], return type: [%s]".format(funcName, jvmReturnType))
+
+    joc.defFunc(funcName, jvmReturnType)
   }
 
 
   override def enterStatement(ctx: StatementContext) {
-    tokens.getText(ctx.packagePrefix) match {
-      case "fmt" => FMT.handleMethod(tokens.getText(ctx.funcName), tokens.getText(ctx.funcArguments))
-      case _     => throw new RuntimeException("Only supporting fmt for now!") // TODO implement me (obviously handle somehow else)
+    if (ctx.RETURN() != null) {
+      println("Handling return statement...")
+      CORE.handleReturn(tokens.getText(ctx.returnArguments))
+    } else if (ctx.packagePrefix != null) {
+      tokens.getText(ctx.packagePrefix) match {
+        case "fmt"    => FMT.handleMethod(tokens.getText(ctx.funcName), tokens.getText(ctx.funcArguments))
+        case other    => throw new RuntimeException(s"Only supporting fmt for now, tried to call [$other]!") // TODO implement me (obviously handle somehow else)
+      }
     }
-
   }
 
   override def exitFuncDeclaration(ctx: FuncDeclarationContext) {
@@ -43,7 +49,7 @@ class FuncGoLangListener(parser: GoLangParser, joc: GoLangClassWriter) extends G
   override def exitSourceFile(ctx: SourceFileContext) {
     joc.close()
 
-    val file = new File("/tmp", "helloworld.class")
+    val file = new File("/tmp", generatedClassName + ".class")
     file.delete()
     file.createNewFile()
     Files.write(joc.getByteCode, file)
@@ -57,10 +63,28 @@ class FuncGoLangListener(parser: GoLangParser, joc: GoLangClassWriter) extends G
 
   private def tokens = parser.getTokenStream
 
+  // todo maybe this can be done in the parser right away?
+  private def parseJvmType(returnType: ReturnTypeContext): JvmType =
+    if (returnType == null) {
+      VoidType
+    } else {
+      tokens.getText(returnType) match {
+        case "int"    => IntType
+        case "string" => ObjectType(classOf[String])
+        case other    => throw new RuntimeException(s"Not yet supported type [$other]!") // TODO implement me
+      }
+    }
+
   // mocks todo remove those
   object FMT {
-    def handleMethod(name: String, args: Any*) {
+    def handleMethod(name: String, args: Seq[Any]) {
       joc.callFunc("fmt", name, args: _*)
+    }
+  }
+
+  object CORE {
+    def handleReturn(vals: Seq[Any]) {
+      joc.returnFromFunc(vals)
     }
   }
   // mocks todo remove those

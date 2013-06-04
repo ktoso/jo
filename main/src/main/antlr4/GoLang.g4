@@ -20,16 +20,25 @@ importDeclaration : IMPORT StringLiteral
                   | IMPORT LPAREN (StringLiteral LineTerminator) RPAREN
                   ;
 
-funcDeclaration : FUNC funcName LPAREN RPAREN LBRACE statement* RBRACE
+funcDeclaration : FUNC funcName LPAREN RPAREN returnType? LBRACE statement* RBRACE
                 ;
 
 statement : packagePrefix '.' funcName LPAREN funcArguments RPAREN NEWLINE?
+          | RETURN returnArguments // go can return multiple values
           ;
+
+returnType : Identifier
+           ;
 
 // only strings for now
 funcArguments : StringLiteral
               | StringLiteral ',' funcArguments
               ;
+
+// only strings for now
+returnArguments : StringLiteral
+                | StringLiteral ',' returnArguments
+                ;
 
 funcName : Identifier
          ;

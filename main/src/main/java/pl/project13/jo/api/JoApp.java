@@ -4,7 +4,7 @@ import pl.project13.jo.scala.GoFileParser;
 
 public class JoApp {
 
-    public static Runnable fromString(String app) {
-        return new GoFileParser().parse(app).asRunnable();
+    public static JoPackage fromString(String app) {
+        return new GoFileParser().parse(app);
     }
 }

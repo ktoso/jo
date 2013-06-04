@@ -23,4 +23,9 @@ class JoPackageImpl(jvmClass: Class[_]) extends JoPackage {
       throw new ClassCastException("The jo package [%s] has no Main func, unable to act like it's runnable!")
     }
   }
+
+  def callUnsafe[T](name: String, forResult: Class[T]): T = {
+    val Func = jvmClass.getDeclaredMethod(name)
+    Func.invoke(currentInstance).asInstanceOf[T]
+  }
 }

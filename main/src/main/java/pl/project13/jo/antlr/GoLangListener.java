@@ -11,6 +11,9 @@ public interface GoLangListener extends ParseTreeListener {
 	void enterFuncDeclaration(GoLangParser.FuncDeclarationContext ctx);
 	void exitFuncDeclaration(GoLangParser.FuncDeclarationContext ctx);
 
+	void enterReturnArguments(GoLangParser.ReturnArgumentsContext ctx);
+	void exitReturnArguments(GoLangParser.ReturnArgumentsContext ctx);
+
 	void enterPackageDeclaration(GoLangParser.PackageDeclarationContext ctx);
 	void exitPackageDeclaration(GoLangParser.PackageDeclarationContext ctx);
 
@@ -28,4 +31,7 @@ public interface GoLangListener extends ParseTreeListener {
 
 	void enterImportDeclaration(GoLangParser.ImportDeclarationContext ctx);
 	void exitImportDeclaration(GoLangParser.ImportDeclarationContext ctx);
+
+	void enterReturnType(GoLangParser.ReturnTypeContext ctx);
+	void exitReturnType(GoLangParser.ReturnTypeContext ctx);
 }

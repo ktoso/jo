@@ -6,4 +6,6 @@ public interface JoPackage {
   public boolean isRunnable();
 
   public Runnable asRunnable() throws ClassCastException;
+
+  public <T> T callUnsafe(String name, Class<T> forResult) throws ClassCastException;
 }
