@@ -5,7 +5,7 @@ Jo - The JVM based Go implementation
 
 And it should be spelled as "Joe", that is - similiar to "Go" the original language we're reimplementing here.
 
-<img src="http://golang.org/doc/gopher/gopherbw.png"/>
+<img src="http://golang.org/doc/gopher/gopherbw.png" height="200"/>
 
 See the official language page and docs here: <a href="http://golang.org">golang.org</a>
 
@@ -37,7 +37,7 @@ it should "return a string from a func" in {
 
   // then
   info("Jo func [GetHello] returned: " + result) // Hello, 世界
-  
+
   result should equal (text)
 }
 ```
