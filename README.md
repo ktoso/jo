@@ -51,6 +51,10 @@ What's inside?
 * ANTLR4 as parser generator
 * ASM as bytecode generator
 
+Other Go impls on the JVM
+-------------------------
+You may want to try out: https://code.google.com/p/jgo (funny - he selected the same impl stack :-)).
+
 Disclaimer
 ----------
 This is a pet project in order for me to have fun generating bytecode and parsers - I'm fully aware of why/how/when the JVM vs. Go's runtime offer pretty different things.
