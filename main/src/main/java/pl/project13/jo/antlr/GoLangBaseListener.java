@@ -4,8 +4,9 @@ package pl.project13.jo.antlr;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.antlr.v4.runtime.tree.ErrorNode;
 
 public class GoLangBaseListener implements GoLangListener {
 	@Override public void enterStatement(GoLangParser.StatementContext ctx) { }
@@ -26,8 +27,14 @@ public class GoLangBaseListener implements GoLangListener {
 	@Override public void enterFuncName(GoLangParser.FuncNameContext ctx) { }
 	@Override public void exitFuncName(GoLangParser.FuncNameContext ctx) { }
 
+	@Override public void enterIfStamement(GoLangParser.IfStamementContext ctx) { }
+	@Override public void exitIfStamement(GoLangParser.IfStamementContext ctx) { }
+
 	@Override public void enterFuncArguments(GoLangParser.FuncArgumentsContext ctx) { }
 	@Override public void exitFuncArguments(GoLangParser.FuncArgumentsContext ctx) { }
+
+	@Override public void enterElseStatement(GoLangParser.ElseStatementContext ctx) { }
+	@Override public void exitElseStatement(GoLangParser.ElseStatementContext ctx) { }
 
 	@Override public void enterPackagePrefix(GoLangParser.PackagePrefixContext ctx) { }
 	@Override public void exitPackagePrefix(GoLangParser.PackagePrefixContext ctx) { }

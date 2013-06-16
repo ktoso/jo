@@ -2,7 +2,8 @@
 
 package pl.project13.jo.antlr;
 
-import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.Token;
 
 public interface GoLangListener extends ParseTreeListener {
 	void enterStatement(GoLangParser.StatementContext ctx);
@@ -23,8 +24,14 @@ public interface GoLangListener extends ParseTreeListener {
 	void enterFuncName(GoLangParser.FuncNameContext ctx);
 	void exitFuncName(GoLangParser.FuncNameContext ctx);
 
+	void enterIfStamement(GoLangParser.IfStamementContext ctx);
+	void exitIfStamement(GoLangParser.IfStamementContext ctx);
+
 	void enterFuncArguments(GoLangParser.FuncArgumentsContext ctx);
 	void exitFuncArguments(GoLangParser.FuncArgumentsContext ctx);
+
+	void enterElseStatement(GoLangParser.ElseStatementContext ctx);
+	void exitElseStatement(GoLangParser.ElseStatementContext ctx);
 
 	void enterPackagePrefix(GoLangParser.PackagePrefixContext ctx);
 	void exitPackagePrefix(GoLangParser.PackagePrefixContext ctx);

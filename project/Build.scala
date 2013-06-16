@@ -130,4 +130,13 @@ object OculusBuild extends Build {
       mainClass := Some("pl.project13.scala.go2j.ParseRunner")
     )
   ) dependsOn(common)
+
+  lazy val grammarGen = Project(
+    "grammar-gen",
+    file("grammar-gen"),
+    settings = buildSettings ++ antlrSettings ++ Seq(
+      libraryDependencies ++= Seq(jsoup) ++ testing,
+      mainClass := Some("pl.project13.jo.grammargen.GrammarGenRunner")
+    )
+  ) dependsOn(common)
 }

@@ -24,8 +24,24 @@ funcDeclaration : FUNC funcName LPAREN RPAREN returnType? LBRACE statement* RBRA
                 ;
 
 statement : packagePrefix '.' funcName LPAREN funcArguments RPAREN NEWLINE?
+          | ifStamement
           | RETURN returnArguments // go can return multiple values
           ;
+
+// IfStmt = "if" [ SimpleStmt ";" ] Expression Block [ "else" ( IfStmt | Block ) ] .
+
+ifStamement : IF booleanExpression statement elseStatement
+            ;
+
+elseStatement : ELSE statement
+              ;
+
+booleanExpression : TRUE
+                  | FALSE
+                  | // TODO function calls
+                  | booleanExpression AMPAMP booleanExpression
+                  | booleanExpression PIPEPIPE booleanExpression
+                  ;
 
 returnType : Identifier
            ;
@@ -139,9 +155,9 @@ EQEQ         : '==';
 BANGEQ       : '!=';
 AMP          : '&';
 CARET        : '^';
-BAR          : '|';
+PIPE         : '|';
 AMPAMP       : '&&';
-BARBAR       : '||';
+PIPEPIPE     : '||';
 CARETEQ      : '^=';
 PLUSEQ       : '+=';
 SUBEQ        : '-=';
